@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Entiteti\Jelo.cs" />
     <Compile Include="Entiteti\Prilog.cs" />
+    <Compile Include="Entiteti\Racun.cs" />
+    <Compile Include="Entiteti\StavkaDisplay.cs" />
     <Compile Include="Entiteti\StavkaRacuna.cs" />
     <Compile Include="Forms\DodajJeloForm.cs">
       <SubType>Form</SubType>
@@ -111,6 +113,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="refresh.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="refresh.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
