@@ -33,7 +33,21 @@ namespace Restoran.Entiteti
             jela.TryGetValue(stavka, out int trenutnoJela);
             if (trenutnoJela == 1) jela.Remove(stavka);
             else jela[stavka] = trenutnoJela - 1;
-           
+
+        }
+
+        public IList<StavkaDisplay> GetDisplay()
+        {
+            return jela.Select(kv => new StavkaDisplay
+            {
+                Stavka = kv.Key,
+                Kolicina = kv.Value,
+            }).ToList();
+        }
+
+        public bool IsEmpty()
+        {
+            return jela.Count == 0;
         }
 
 
@@ -43,6 +57,6 @@ namespace Restoran.Entiteti
 
         public IDictionary<StavkaRacuna, int> Jela => jela;
 
-        public int UkupnaCena => jela.Keys.Select(k => k.UkupnaCena * jela[k]).Sum();
+        public int UkupnaCena => jela.Keys.Select(k => k.UkupnaCena * jela[k]).DefaultIfEmpty(0).Sum();
     }
 }
