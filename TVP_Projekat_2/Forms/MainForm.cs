@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace Restoran.Forms
 {
+    /*TODO: racuni vremenski period*/
     public partial class MainForm : Form
     {
         private IDataStorage storage;
@@ -20,7 +21,7 @@ namespace Restoran.Forms
             InitHandlers();
             handlers["porucivanjeTab"].Initialize();
             trenutniRacun = new Racun();
-   
+
         }
 
         private void HandleFormClosing(object sender, FormClosingEventArgs e)
@@ -42,8 +43,9 @@ namespace Restoran.Forms
         {
             handlers = new Dictionary<string, RestoranEventHandler>
             {
-                { "porucivanjeTab", new PorucivanjeHandler(jelaListBox, priloziGroupBox, jeloContext, storage) }, // TODO: prebaciti sve ovde
-                { "priloziTab", new PriloziHandler(priloziListBox, dodajPrilogBtn, storage) }
+                { "porucivanjeTab", new PorucivanjeHandler(jelaListBox, priloziGroupBox, jeloContext, filterNazivTb, cenaRastuceCb, cenaOpadajuceCb, storage) },
+                { "priloziTab", new PriloziHandler(priloziListBox, dodajPrilogBtn, storage) },
+                {"racuniTab", new RacuniHandler(racuniListBox, stavkeListBox, storage)}
             };
         }
 
@@ -133,6 +135,11 @@ namespace Restoran.Forms
                 MessageBox.Show("Ne mozete izdati prazan racun !", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            int result = storage.DodajRacun(trenutniRacun);
+            if (result == -1) return;
+            MessageBox.Show("Racun je uspesno izdat !", "Uspesno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            trenutniRacun = new Racun();
+            RefreshRacun();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Restoran.Entiteti
@@ -8,7 +9,7 @@ namespace Restoran.Entiteti
     {
         private int id;
         private DateTime date;
-        private readonly IDictionary<StavkaRacuna, int> jela; // Stavka, kolicina
+        private IDictionary<StavkaRacuna, int> jela; // Stavka, kolicina
 
         public Racun(int id, DateTime date) : this()
         {
@@ -55,8 +56,13 @@ namespace Restoran.Entiteti
 
         public DateTime Date { get => date; set => date = value; }
 
-        public IDictionary<StavkaRacuna, int> Jela => jela;
+        public IDictionary<StavkaRacuna, int> Jela { get => jela; set => jela = value; }
 
         public int UkupnaCena => jela.Keys.Select(k => k.UkupnaCena * jela[k]).DefaultIfEmpty(0).Sum();
+
+        public override string ToString()
+        {
+            return $"Datum: {date.ToString("dd/M/yyyy", CultureInfo.InvariantCulture)} Cena: {UkupnaCena}";
+        }
     }
 }
