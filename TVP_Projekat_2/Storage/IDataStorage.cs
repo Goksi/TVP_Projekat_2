@@ -15,6 +15,12 @@ namespace Restoran.Storage
 
         int DodajJelo(string naziv, int cena, List<Prilog> prilozi);
 
+        int DodajRacun(Racun racun);
+
+        IDictionary<StavkaRacuna, int> GetStavkeZaRacun(int id);
+
+        IList<Racun> GetRacuni();
+
         void Close();
     }
 }
