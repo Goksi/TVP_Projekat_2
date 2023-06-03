@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Handlers\PorucivanjeHandler.cs" />
     <Compile Include="Handlers\PriloziHandler.cs" />
+    <Compile Include="Handlers\RacuniHandler.cs" />
     <Compile Include="Handlers\RestoranEventHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

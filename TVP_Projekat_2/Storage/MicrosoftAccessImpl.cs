@@ -1,4 +1,5 @@
 ﻿using Restoran.Entiteti;
+using System;
 using System.Collections.Generic;
 
 namespace Restoran.Storage
@@ -77,6 +78,71 @@ namespace Restoran.Storage
                 connection.UseVoidQuery("insert into Pripadnost(id_jelo, id_prilog) values (@0, @1)", jeloId, prilog.Id);
             }
             return jeloId;
+        }
+
+        public int DodajRacun(Racun racun)
+        {
+            int racunId = connection.UseVoidQuery("insert into racun(ukupna_cena, datum) values (@0, @1)",
+                racun.UkupnaCena, DateTime.Now);
+            var jela = racun.Jela;
+            foreach (var keyValue in jela)
+            {
+                StavkaRacuna stavka = keyValue.Key;
+                int kolicina = keyValue.Value;
+                bool prilogPrisutan = !object.ReferenceEquals(stavka.Prilog, null);
+                connection.UseVoidQuery("insert into Stavka_racuna(id_racun, id_jelo, id_prilog, cenaJelo, cenaPrilog, kolicina) values (@0, @1, @2, @3, @4, @5)",
+                    racunId,
+                    stavka.Jelo.Id,
+                    prilogPrisutan ? (object)stavka.Prilog.Id : DBNull.Value,
+                    stavka.Jelo.Cena,
+                    prilogPrisutan ? (object)stavka.Prilog.Cena : DBNull.Value,
+                    kolicina);
+            }
+            return racunId;
+        }
+
+        public IDictionary<StavkaRacuna, int> GetStavkeZaRacun(int id)
+        {
+            return connection.UseQuery("SELECT Stavka_racuna.id_jelo, Jelo.naziv, Jelo.cena, Stavka_racuna.id_prilog, Prilog.naziv AS NazivPrilog, Prilog.cena AS CenaPriloga, Stavka_racuna.kolicina " +
+                "FROM ((Stavka_racuna INNER JOIN Jelo ON Stavka_racuna.id_jelo = Jelo.id_jelo) " +
+                "LEFT OUTER JOIN Prilog ON Stavka_racuna.id_prilog = Prilog.id_prilog) " +
+                "WHERE (Stavka_racuna.id_racun = @0)", (reader) =>
+            {
+                IDictionary<StavkaRacuna, int> jela = new Dictionary<StavkaRacuna, int>();
+                while (reader.Read())
+                {
+                    int kolicina = (int)reader["kolicina"];
+                    Jelo jelo = new Jelo((int)reader["id_jelo"], reader["naziv"].ToString(), (int)reader["cena"]);
+                    object idPrilogTemp = reader["id_prilog"];
+                    Prilog prilog;
+                    if (idPrilogTemp == DBNull.Value)
+                    {
+                        prilog = null;
+                    }
+                    else
+                    {
+                        prilog = new Prilog((int)idPrilogTemp, reader["NazivPrilog"].ToString(), (int)reader["CenaPriloga"]);
+                    }
+
+                    jela.Add(new StavkaRacuna(jelo, prilog), kolicina);
+                }
+                return jela;
+            }, id);
+        }
+
+        public IList<Racun> GetRacuni()
+        {
+            return connection.UseQuery("select id_racun, datum from racun", (reader) =>
+            {
+                IList<Racun> racuni = new List<Racun>();
+                while (reader.Read())
+                {
+                    Racun racun = new Racun((int)reader["id_racun"], (DateTime)reader["datum"]);
+                    racun.Jela = GetStavkeZaRacun(racun.Id);
+                    racuni.Add(racun);
+                }
+                return racuni;
+            });
         }
 
         public void Close()
