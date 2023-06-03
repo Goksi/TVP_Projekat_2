@@ -39,6 +39,10 @@
             this.dodajPrilogBtn = new System.Windows.Forms.Button();
             this.priloziListBox = new System.Windows.Forms.ListBox();
             this.racuniTab = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.stavkeListBox = new System.Windows.Forms.ListBox();
+            this.racuniListBox = new System.Windows.Forms.ListBox();
             this.statistikaTab = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.racunListBox = new System.Windows.Forms.ListBox();
@@ -51,9 +55,13 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.racunContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.obrisiStavkuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cenaRastuceCb = new System.Windows.Forms.CheckBox();
+            this.cenaOpadajuceCb = new System.Windows.Forms.CheckBox();
+            this.filterNazivTb = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.porucivanjeTab.SuspendLayout();
             this.priloziTab.SuspendLayout();
+            this.racuniTab.SuspendLayout();
             this.jeloContext.SuspendLayout();
             this.racunContext.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +81,9 @@
             // 
             // porucivanjeTab
             // 
+            this.porucivanjeTab.Controls.Add(this.filterNazivTb);
+            this.porucivanjeTab.Controls.Add(this.cenaOpadajuceCb);
+            this.porucivanjeTab.Controls.Add(this.cenaRastuceCb);
             this.porucivanjeTab.Controls.Add(this.dodajJeloBtn);
             this.porucivanjeTab.Controls.Add(this.priloziGroupBox);
             this.porucivanjeTab.Controls.Add(this.jelaListBox);
@@ -143,12 +154,53 @@
             // 
             // racuniTab
             // 
+            this.racuniTab.Controls.Add(this.label4);
+            this.racuniTab.Controls.Add(this.label3);
+            this.racuniTab.Controls.Add(this.stavkeListBox);
+            this.racuniTab.Controls.Add(this.racuniListBox);
             this.racuniTab.Location = new System.Drawing.Point(4, 22);
             this.racuniTab.Name = "racuniTab";
             this.racuniTab.Size = new System.Drawing.Size(708, 385);
             this.racuniTab.TabIndex = 2;
             this.racuniTab.Text = "Racuni";
             this.racuniTab.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(475, 2);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(133, 24);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Stavke racuna:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(87, 2);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 24);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Racuni:";
+            // 
+            // stavkeListBox
+            // 
+            this.stavkeListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.stavkeListBox.FormattingEnabled = true;
+            this.stavkeListBox.Location = new System.Drawing.Point(412, 29);
+            this.stavkeListBox.Name = "stavkeListBox";
+            this.stavkeListBox.Size = new System.Drawing.Size(262, 329);
+            this.stavkeListBox.TabIndex = 1;
+            // 
+            // racuniListBox
+            // 
+            this.racuniListBox.FormattingEnabled = true;
+            this.racuniListBox.Location = new System.Drawing.Point(14, 29);
+            this.racuniListBox.Name = "racuniListBox";
+            this.racuniListBox.Size = new System.Drawing.Size(262, 329);
+            this.racuniListBox.TabIndex = 0;
             // 
             // statistikaTab
             // 
@@ -163,11 +215,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(796, 21);
+            this.label1.Location = new System.Drawing.Point(758, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 25);
+            this.label1.Size = new System.Drawing.Size(151, 25);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Racun";
+            this.label1.Text = "Trenutni racun";
             // 
             // racunListBox
             // 
@@ -248,6 +300,33 @@
             this.obrisiStavkuToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.obrisiStavkuToolStripMenuItem.Text = "Obrisi stavku";
             // 
+            // cenaRastuceCb
+            // 
+            this.cenaRastuceCb.AutoSize = true;
+            this.cenaRastuceCb.Location = new System.Drawing.Point(244, 7);
+            this.cenaRastuceCb.Name = "cenaRastuceCb";
+            this.cenaRastuceCb.Size = new System.Drawing.Size(89, 17);
+            this.cenaRastuceCb.TabIndex = 3;
+            this.cenaRastuceCb.Text = "Cena rastuce";
+            this.cenaRastuceCb.UseVisualStyleBackColor = true;
+            // 
+            // cenaOpadajuceCb
+            // 
+            this.cenaOpadajuceCb.AutoSize = true;
+            this.cenaOpadajuceCb.Location = new System.Drawing.Point(244, 31);
+            this.cenaOpadajuceCb.Name = "cenaOpadajuceCb";
+            this.cenaOpadajuceCb.Size = new System.Drawing.Size(104, 17);
+            this.cenaOpadajuceCb.TabIndex = 4;
+            this.cenaOpadajuceCb.Text = "Cena opadajuce";
+            this.cenaOpadajuceCb.UseVisualStyleBackColor = true;
+            // 
+            // filterNazivTb
+            // 
+            this.filterNazivTb.Location = new System.Drawing.Point(243, 54);
+            this.filterNazivTb.Name = "filterNazivTb";
+            this.filterNazivTb.Size = new System.Drawing.Size(105, 20);
+            this.filterNazivTb.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,7 +348,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.tabControl1.ResumeLayout(false);
             this.porucivanjeTab.ResumeLayout(false);
+            this.porucivanjeTab.PerformLayout();
             this.priloziTab.ResumeLayout(false);
+            this.racuniTab.ResumeLayout(false);
+            this.racuniTab.PerformLayout();
             this.jeloContext.ResumeLayout(false);
             this.racunContext.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -300,6 +382,13 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ContextMenuStrip racunContext;
         private System.Windows.Forms.ToolStripMenuItem obrisiStavkuToolStripMenuItem;
+        private System.Windows.Forms.ListBox stavkeListBox;
+        private System.Windows.Forms.ListBox racuniListBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cenaOpadajuceCb;
+        private System.Windows.Forms.CheckBox cenaRastuceCb;
+        private System.Windows.Forms.TextBox filterNazivTb;
     }
 }
 

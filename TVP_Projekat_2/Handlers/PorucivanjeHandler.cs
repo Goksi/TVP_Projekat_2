@@ -4,35 +4,55 @@ using Restoran.Storage;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Restoran.Handlers
 {
     internal class PorucivanjeHandler : RestoranEventHandler
     {
+        private const string TB_PLACEHOLDER = "Filtriraj po nazivu...";
         private readonly ListBox jelaListBox;
         private readonly GroupBox piloziGroupBox;
         private readonly ContextMenuStrip jeloContext;
+        private readonly CheckBox cenaRastuceCb;
+        private readonly CheckBox cenaOpadajuceCb;
         private readonly IDataStorage storage;
+        private readonly TextBox filterNaziv;
         private bool otvorenMenu = false;
+        private IList<Jelo> jela;
 
-        public PorucivanjeHandler(ListBox jelaListBox, GroupBox piloziGroupBox, ContextMenuStrip jeloContext, IDataStorage storage)
+        public PorucivanjeHandler(ListBox jelaListBox, GroupBox piloziGroupBox, ContextMenuStrip jeloContext, TextBox filterNaziv, CheckBox cenaRastuceCb, CheckBox cenaOpadajuceCb, IDataStorage storage)
         {
             this.jelaListBox = jelaListBox;
             this.piloziGroupBox = piloziGroupBox;
             this.storage = storage;
             this.jeloContext = jeloContext;
+            this.cenaRastuceCb = cenaRastuceCb;
+            this.cenaOpadajuceCb = cenaOpadajuceCb;
+            this.filterNaziv = filterNaziv;
+
+            cenaOpadajuceCb.CheckedChanged += HandleSortiranjeCb;
+            cenaRastuceCb.CheckedChanged += HandleSortiranjeCb;
 
             jelaListBox.MouseUp += HandleContextOpen;
             jeloContext.ItemClicked += HandleContextClick;
             jelaListBox.SelectedIndexChanged += HandleJeloLbChange;
 
+            filterNaziv.LostFocus += HandleFocusLost;
+            filterNaziv.GotFocus += HandleFocusGet;
+            filterNaziv.TextChanged += HandleNazivFilterChange;
+
         }
 
         public void Initialize()
         {
-            jelaListBox.DataSource = storage.GetJela();
+            jela = storage.GetJela();
+            cenaRastuceCb.Checked = false;
+            cenaOpadajuceCb.Checked = false;
+            jelaListBox.DataSource = jela;
             jelaListBox.SelectedIndex = -1;
+            SetPlaceholder(filterNaziv);
         }
 
         private void HandleContextOpen(object sender, MouseEventArgs e)
@@ -52,11 +72,56 @@ namespace Restoran.Handlers
                 forma.FormClosing += (obj, args) =>
                 {
                     otvorenMenu = false;
-                    jelaListBox.DataSource = storage.GetJela();
+                    Initialize();
                 };
 
                 forma.Show();
             }
+        }
+        private void HandleFocusLost(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(filterNaziv.Text))
+            {
+                SetPlaceholder(filterNaziv);
+            }
+        }
+
+        private void HandleFocusGet(object sender, EventArgs e)
+        {
+            if (filterNaziv.Text == TB_PLACEHOLDER)
+            {
+                filterNaziv.Clear();
+                filterNaziv.ForeColor = Color.Black;
+            }
+        }
+
+        private void HandleNazivFilterChange(object sender, EventArgs e)
+        {
+            if (filterNaziv.Text == TB_PLACEHOLDER) return;
+            jelaListBox.DataSource = jela.Where(jelo => jelo.Naziv.ToLower().Contains(filterNaziv.Text.ToLower())).ToList();
+        }
+
+        private void HandleSortiranjeCb(object sender, EventArgs e)
+        {
+            if (cenaRastuceCb.Checked)
+            {
+                (jela as List<Jelo>).Sort((prvi, drugi) => prvi.Cena - drugi.Cena);
+                cenaOpadajuceCb.Enabled = false;
+            }
+            else if (cenaOpadajuceCb.Checked)
+            {
+                (jela as List<Jelo>).Sort((prvi, drugi) => drugi.Cena - prvi.Cena);
+                cenaRastuceCb.Enabled = false;
+            }
+            else
+            {
+                (jela as List<Jelo>).Sort((prvi, drugi) => prvi.Id - drugi.Id);
+                cenaOpadajuceCb.Enabled = true;
+                cenaRastuceCb.Enabled = true;
+            }
+            jelaListBox.DataSource = null;
+            jelaListBox.DataSource = jela;
+            HandleNazivFilterChange(sender, e);
         }
 
         private void HandleJeloLbChange(object sender, EventArgs e)
@@ -103,6 +168,12 @@ namespace Restoran.Handlers
                     x += checkBox.Width;
                 }
             }
+        }
+
+        private void SetPlaceholder(TextBox textBox)
+        {
+            textBox.Text = TB_PLACEHOLDER;
+            textBox.ForeColor = Color.LightGray;
         }
     }
 }
