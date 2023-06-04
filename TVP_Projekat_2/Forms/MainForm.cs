@@ -8,7 +8,6 @@ using System.Windows.Forms;
 
 namespace Restoran.Forms
 {
-    /*TODO: racuni vremenski period*/
     public partial class MainForm : Form
     {
         private IDataStorage storage;
@@ -45,7 +44,7 @@ namespace Restoran.Forms
             {
                 { "porucivanjeTab", new PorucivanjeHandler(jelaListBox, priloziGroupBox, jeloContext, filterNazivTb, cenaRastuceCb, cenaOpadajuceCb, storage) },
                 { "priloziTab", new PriloziHandler(priloziListBox, dodajPrilogBtn, storage) },
-                {"racuniTab", new RacuniHandler(racuniListBox, stavkeListBox, storage)}
+                {"racuniTab", new RacuniHandler(racuniListBox, stavkeListBox, odTimePicker, doTimePicker,resetBtn, filterDatumBtn, storage)}
             };
         }
 

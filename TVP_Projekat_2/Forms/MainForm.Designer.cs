@@ -32,6 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.porucivanjeTab = new System.Windows.Forms.TabPage();
+            this.filterNazivTb = new System.Windows.Forms.TextBox();
+            this.cenaOpadajuceCb = new System.Windows.Forms.CheckBox();
+            this.cenaRastuceCb = new System.Windows.Forms.CheckBox();
             this.dodajJeloBtn = new System.Windows.Forms.Button();
             this.priloziGroupBox = new System.Windows.Forms.GroupBox();
             this.jelaListBox = new System.Windows.Forms.ListBox();
@@ -55,9 +58,12 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.racunContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.obrisiStavkuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cenaRastuceCb = new System.Windows.Forms.CheckBox();
-            this.cenaOpadajuceCb = new System.Windows.Forms.CheckBox();
-            this.filterNazivTb = new System.Windows.Forms.TextBox();
+            this.odTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.doTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.resetBtn = new System.Windows.Forms.Button();
+            this.filterDatumBtn = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.porucivanjeTab.SuspendLayout();
             this.priloziTab.SuspendLayout();
@@ -94,6 +100,33 @@
             this.porucivanjeTab.TabIndex = 0;
             this.porucivanjeTab.Text = "Porucivanje";
             this.porucivanjeTab.UseVisualStyleBackColor = true;
+            // 
+            // filterNazivTb
+            // 
+            this.filterNazivTb.Location = new System.Drawing.Point(243, 54);
+            this.filterNazivTb.Name = "filterNazivTb";
+            this.filterNazivTb.Size = new System.Drawing.Size(105, 20);
+            this.filterNazivTb.TabIndex = 5;
+            // 
+            // cenaOpadajuceCb
+            // 
+            this.cenaOpadajuceCb.AutoSize = true;
+            this.cenaOpadajuceCb.Location = new System.Drawing.Point(244, 31);
+            this.cenaOpadajuceCb.Name = "cenaOpadajuceCb";
+            this.cenaOpadajuceCb.Size = new System.Drawing.Size(104, 17);
+            this.cenaOpadajuceCb.TabIndex = 4;
+            this.cenaOpadajuceCb.Text = "Cena opadajuce";
+            this.cenaOpadajuceCb.UseVisualStyleBackColor = true;
+            // 
+            // cenaRastuceCb
+            // 
+            this.cenaRastuceCb.AutoSize = true;
+            this.cenaRastuceCb.Location = new System.Drawing.Point(244, 7);
+            this.cenaRastuceCb.Name = "cenaRastuceCb";
+            this.cenaRastuceCb.Size = new System.Drawing.Size(89, 17);
+            this.cenaRastuceCb.TabIndex = 3;
+            this.cenaRastuceCb.Text = "Cena rastuce";
+            this.cenaRastuceCb.UseVisualStyleBackColor = true;
             // 
             // dodajJeloBtn
             // 
@@ -154,6 +187,12 @@
             // 
             // racuniTab
             // 
+            this.racuniTab.Controls.Add(this.filterDatumBtn);
+            this.racuniTab.Controls.Add(this.resetBtn);
+            this.racuniTab.Controls.Add(this.label6);
+            this.racuniTab.Controls.Add(this.label5);
+            this.racuniTab.Controls.Add(this.doTimePicker);
+            this.racuniTab.Controls.Add(this.odTimePicker);
             this.racuniTab.Controls.Add(this.label4);
             this.racuniTab.Controls.Add(this.label3);
             this.racuniTab.Controls.Add(this.stavkeListBox);
@@ -169,7 +208,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(475, 2);
+            this.label4.Location = new System.Drawing.Point(509, 2);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(133, 24);
             this.label4.TabIndex = 3;
@@ -189,9 +228,9 @@
             // 
             this.stavkeListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.stavkeListBox.FormattingEnabled = true;
-            this.stavkeListBox.Location = new System.Drawing.Point(412, 29);
+            this.stavkeListBox.Location = new System.Drawing.Point(479, 29);
             this.stavkeListBox.Name = "stavkeListBox";
-            this.stavkeListBox.Size = new System.Drawing.Size(262, 329);
+            this.stavkeListBox.Size = new System.Drawing.Size(195, 329);
             this.stavkeListBox.TabIndex = 1;
             // 
             // racuniListBox
@@ -300,32 +339,57 @@
             this.obrisiStavkuToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.obrisiStavkuToolStripMenuItem.Text = "Obrisi stavku";
             // 
-            // cenaRastuceCb
+            // odTimePicker
             // 
-            this.cenaRastuceCb.AutoSize = true;
-            this.cenaRastuceCb.Location = new System.Drawing.Point(244, 7);
-            this.cenaRastuceCb.Name = "cenaRastuceCb";
-            this.cenaRastuceCb.Size = new System.Drawing.Size(89, 17);
-            this.cenaRastuceCb.TabIndex = 3;
-            this.cenaRastuceCb.Text = "Cena rastuce";
-            this.cenaRastuceCb.UseVisualStyleBackColor = true;
+            this.odTimePicker.Location = new System.Drawing.Point(282, 114);
+            this.odTimePicker.Name = "odTimePicker";
+            this.odTimePicker.Size = new System.Drawing.Size(191, 20);
+            this.odTimePicker.TabIndex = 4;
             // 
-            // cenaOpadajuceCb
+            // doTimePicker
             // 
-            this.cenaOpadajuceCb.AutoSize = true;
-            this.cenaOpadajuceCb.Location = new System.Drawing.Point(244, 31);
-            this.cenaOpadajuceCb.Name = "cenaOpadajuceCb";
-            this.cenaOpadajuceCb.Size = new System.Drawing.Size(104, 17);
-            this.cenaOpadajuceCb.TabIndex = 4;
-            this.cenaOpadajuceCb.Text = "Cena opadajuce";
-            this.cenaOpadajuceCb.UseVisualStyleBackColor = true;
+            this.doTimePicker.Location = new System.Drawing.Point(282, 185);
+            this.doTimePicker.Name = "doTimePicker";
+            this.doTimePicker.Size = new System.Drawing.Size(191, 20);
+            this.doTimePicker.TabIndex = 5;
             // 
-            // filterNazivTb
+            // label5
             // 
-            this.filterNazivTb.Location = new System.Drawing.Point(243, 54);
-            this.filterNazivTb.Name = "filterNazivTb";
-            this.filterNazivTb.Size = new System.Drawing.Size(105, 20);
-            this.filterNazivTb.TabIndex = 5;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(345, 86);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 25);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Od:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(345, 157);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(45, 25);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Do:";
+            // 
+            // resetBtn
+            // 
+            this.resetBtn.Location = new System.Drawing.Point(283, 222);
+            this.resetBtn.Name = "resetBtn";
+            this.resetBtn.Size = new System.Drawing.Size(75, 23);
+            this.resetBtn.TabIndex = 8;
+            this.resetBtn.Text = "Reset";
+            this.resetBtn.UseVisualStyleBackColor = true;
+            // 
+            // filterDatumBtn
+            // 
+            this.filterDatumBtn.Location = new System.Drawing.Point(398, 222);
+            this.filterDatumBtn.Name = "filterDatumBtn";
+            this.filterDatumBtn.Size = new System.Drawing.Size(75, 23);
+            this.filterDatumBtn.TabIndex = 9;
+            this.filterDatumBtn.Text = "Filter";
+            this.filterDatumBtn.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -389,6 +453,12 @@
         private System.Windows.Forms.CheckBox cenaOpadajuceCb;
         private System.Windows.Forms.CheckBox cenaRastuceCb;
         private System.Windows.Forms.TextBox filterNazivTb;
+        private System.Windows.Forms.DateTimePicker odTimePicker;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker doTimePicker;
+        private System.Windows.Forms.Button filterDatumBtn;
+        private System.Windows.Forms.Button resetBtn;
     }
 }
 
