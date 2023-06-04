@@ -130,9 +130,11 @@ namespace Restoran.Storage
             }, id);
         }
 
-        public IList<Racun> GetRacuni()
+        public IList<Racun> GetRacuni(DateTime? odDatum, DateTime? doDatum)
         {
-            return connection.UseQuery("select id_racun, datum from racun", (reader) =>
+            DateTime odDatumFinish = odDatum.HasValue ? odDatum.Value : new DateTime(1970, 1, 1);
+            DateTime doDatumFinished = doDatum.HasValue ? doDatum.Value : DateTime.Now;
+            return connection.UseQuery("select id_racun, datum from racun where datum between @0 and @1", (reader) =>
             {
                 IList<Racun> racuni = new List<Racun>();
                 while (reader.Read())
@@ -142,7 +144,7 @@ namespace Restoran.Storage
                     racuni.Add(racun);
                 }
                 return racuni;
-            });
+            }, odDatumFinish, doDatumFinished);
         }
 
         public void Close()

@@ -24,7 +24,12 @@ namespace Restoran.Storage
                 cmd.CommandText = query;
                 for (int i = 0; i < parameters.Length; i++)
                 {
-                    cmd.Parameters.AddWithValue($"@{i}", parameters[i]);
+                    if (parameters[i] is DateTime)
+                    {
+                        cmd.Parameters.Add($"@{i}", OleDbType.Date);
+                        cmd.Parameters[$"@{i}"].Value = (DateTime)parameters[i];
+                    }
+                    else cmd.Parameters.AddWithValue($"@{i}", parameters[i]);
                 }
                 OleDbDataReader reader = cmd.ExecuteReader();
                 return executor(reader);

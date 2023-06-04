@@ -1,4 +1,5 @@
 ﻿using Restoran.Entiteti;
+using System;
 using System.Collections.Generic;
 
 namespace Restoran.Storage
@@ -19,7 +20,7 @@ namespace Restoran.Storage
 
         IDictionary<StavkaRacuna, int> GetStavkeZaRacun(int id);
 
-        IList<Racun> GetRacuni();
+        IList<Racun> GetRacuni(DateTime? odDatum = null, DateTime? doDatum = null);
 
         void Close();
     }

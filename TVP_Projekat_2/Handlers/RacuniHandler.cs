@@ -10,13 +10,24 @@ namespace Restoran.Handlers
     {
         private readonly ListBox racunListBox;
         private readonly ListBox stavkeListBox;
+        private readonly DateTimePicker odPicker;
+        private readonly DateTimePicker doPicker;
         private readonly IDataStorage storage;
 
-        public RacuniHandler(ListBox racunListBox, ListBox stavkeListBox, IDataStorage storage)
+        public RacuniHandler(ListBox racunListBox, ListBox stavkeListBox, DateTimePicker odPicker, DateTimePicker doPicker, Button resetBtn, Button filterBtn, IDataStorage storage)
         {
             this.racunListBox = racunListBox;
             this.stavkeListBox = stavkeListBox;
             this.storage = storage;
+            this.odPicker = odPicker;
+            this.doPicker = doPicker;
+            resetBtn.Click += (obj, args) =>
+            {
+                racunListBox.DataSource = storage.GetRacuni();
+                odPicker.Value = DateTime.Now;
+                doPicker.Value = DateTime.Now;
+            };
+            filterBtn.Click += HandleDatumFilter;
             racunListBox.SelectedIndexChanged += HandleIndexChange;
             stavkeListBox.DrawItem += HandleRacunListDraw;
             stavkeListBox.MeasureItem += HandleRacunMeasureItem;
@@ -35,6 +46,20 @@ namespace Restoran.Handlers
                 Racun racun = selected as Racun;
                 stavkeListBox.DataSource = racun.GetDisplay();
             }
+            else stavkeListBox.DataSource = null;
+        }
+
+        private void HandleDatumFilter(object sender, EventArgs e)
+        {
+            DateTime odDatum = odPicker.Value;
+            DateTime doDatum = doPicker.Value;
+            if (odDatum.Date > doDatum.Date)
+            {
+                MessageBox.Show("OD datum ne moze biti posle DO datuma", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            racunListBox.DataSource = storage.GetRacuni(odDatum, doDatum);
+            stavkeListBox.DataSource = null;
         }
 
         private void HandleRacunListDraw(object sender, DrawItemEventArgs e)
