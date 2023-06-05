@@ -130,6 +130,18 @@ namespace Restoran.Storage
             }, id);
         }
 
+        public Jelo GetTopJelo()
+        {
+            return connection.UseQuery("select top 1 Jelo.naziv, Jelo.cena, Stavka_racuna.id_jelo, sum(Stavka_racuna.kolicina) as kolicina " +
+                "from (Stavka_racuna inner join Jelo on Jelo.id_jelo = Stavka_racuna.id_jelo) " +
+                "group by Stavka_racuna.id_jelo, Jelo.naziv, Jelo.cena " +
+                "order by sum(Stavka_racuna.kolicina) desc", (reader) =>
+            {
+                if (!reader.Read()) return null;
+                else return new Jelo(int.Parse(reader["id_jelo"].ToString()), reader["naziv"].ToString(), int.Parse(reader["cena"].ToString()));
+            });
+        }
+
         public IList<Racun> GetRacuni(DateTime? odDatum, DateTime? doDatum)
         {
             DateTime odDatumFinish = odDatum.HasValue ? odDatum.Value : new DateTime(1970, 1, 1);
@@ -151,5 +163,7 @@ namespace Restoran.Storage
         {
             connection.Close();
         }
+
+
     }
 }

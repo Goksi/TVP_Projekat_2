@@ -22,6 +22,8 @@ namespace Restoran.Storage
 
         IList<Racun> GetRacuni(DateTime? odDatum = null, DateTime? doDatum = null);
 
+        Jelo GetTopJelo();
+
         void Close();
     }
 }
