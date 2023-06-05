@@ -4,6 +4,8 @@ using Restoran.Storage;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Restoran.Forms
@@ -20,7 +22,21 @@ namespace Restoran.Forms
             InitHandlers();
             handlers["porucivanjeTab"].Initialize();
             trenutniRacun = new Racun();
-
+            SetNajprodavanije();
+            Task.Run(() =>
+            {
+                int x = 0;
+                bool nazad = false;
+                while(true)
+                {
+                    if (x == this.ClientSize.Width - najProdLbl.Width) nazad = true;
+                    else if (x == 0) nazad = false;
+                    najProdLbl.Location = new Point(x, najProdLbl.Location.Y);
+                    if (!nazad) x++;
+                    else x--;
+                    Thread.Sleep(10);
+                }
+            });
         }
 
         private void HandleFormClosing(object sender, FormClosingEventArgs e)
@@ -139,6 +155,14 @@ namespace Restoran.Forms
             MessageBox.Show("Racun je uspesno izdat !", "Uspesno", MessageBoxButtons.OK, MessageBoxIcon.Information);
             trenutniRacun = new Racun();
             RefreshRacun();
+            SetNajprodavanije();
+        }
+
+        private void SetNajprodavanije()
+        {
+            Jelo jelo = storage.GetTopJelo();
+            if (jelo == null) najProdLbl.Text = string.Empty;
+            else najProdLbl.Text = $"Najprodavanije jelo: {jelo.Naziv}";
         }
     }
 }

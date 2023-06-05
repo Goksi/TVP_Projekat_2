@@ -42,6 +42,12 @@
             this.dodajPrilogBtn = new System.Windows.Forms.Button();
             this.priloziListBox = new System.Windows.Forms.ListBox();
             this.racuniTab = new System.Windows.Forms.TabPage();
+            this.filterDatumBtn = new System.Windows.Forms.Button();
+            this.resetBtn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.doTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.odTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.stavkeListBox = new System.Windows.Forms.ListBox();
@@ -58,12 +64,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.racunContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.obrisiStavkuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.odTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.doTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.resetBtn = new System.Windows.Forms.Button();
-            this.filterDatumBtn = new System.Windows.Forms.Button();
+            this.najProdLbl = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.porucivanjeTab.SuspendLayout();
             this.priloziTab.SuspendLayout();
@@ -204,6 +205,58 @@
             this.racuniTab.Text = "Racuni";
             this.racuniTab.UseVisualStyleBackColor = true;
             // 
+            // filterDatumBtn
+            // 
+            this.filterDatumBtn.Location = new System.Drawing.Point(398, 222);
+            this.filterDatumBtn.Name = "filterDatumBtn";
+            this.filterDatumBtn.Size = new System.Drawing.Size(75, 23);
+            this.filterDatumBtn.TabIndex = 9;
+            this.filterDatumBtn.Text = "Filter";
+            this.filterDatumBtn.UseVisualStyleBackColor = true;
+            // 
+            // resetBtn
+            // 
+            this.resetBtn.Location = new System.Drawing.Point(283, 222);
+            this.resetBtn.Name = "resetBtn";
+            this.resetBtn.Size = new System.Drawing.Size(75, 23);
+            this.resetBtn.TabIndex = 8;
+            this.resetBtn.Text = "Reset";
+            this.resetBtn.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(345, 157);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(45, 25);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Do:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(345, 86);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 25);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Od:";
+            // 
+            // doTimePicker
+            // 
+            this.doTimePicker.Location = new System.Drawing.Point(282, 185);
+            this.doTimePicker.Name = "doTimePicker";
+            this.doTimePicker.Size = new System.Drawing.Size(191, 20);
+            this.doTimePicker.TabIndex = 5;
+            // 
+            // odTimePicker
+            // 
+            this.odTimePicker.Location = new System.Drawing.Point(282, 114);
+            this.odTimePicker.Name = "odTimePicker";
+            this.odTimePicker.Size = new System.Drawing.Size(191, 20);
+            this.odTimePicker.TabIndex = 4;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -339,63 +392,22 @@
             this.obrisiStavkuToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.obrisiStavkuToolStripMenuItem.Text = "Obrisi stavku";
             // 
-            // odTimePicker
+            // najProdLbl
             // 
-            this.odTimePicker.Location = new System.Drawing.Point(282, 114);
-            this.odTimePicker.Name = "odTimePicker";
-            this.odTimePicker.Size = new System.Drawing.Size(191, 20);
-            this.odTimePicker.TabIndex = 4;
-            // 
-            // doTimePicker
-            // 
-            this.doTimePicker.Location = new System.Drawing.Point(282, 185);
-            this.doTimePicker.Name = "doTimePicker";
-            this.doTimePicker.Size = new System.Drawing.Size(191, 20);
-            this.doTimePicker.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(345, 86);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 25);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Od:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(345, 157);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 25);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Do:";
-            // 
-            // resetBtn
-            // 
-            this.resetBtn.Location = new System.Drawing.Point(283, 222);
-            this.resetBtn.Name = "resetBtn";
-            this.resetBtn.Size = new System.Drawing.Size(75, 23);
-            this.resetBtn.TabIndex = 8;
-            this.resetBtn.Text = "Reset";
-            this.resetBtn.UseVisualStyleBackColor = true;
-            // 
-            // filterDatumBtn
-            // 
-            this.filterDatumBtn.Location = new System.Drawing.Point(398, 222);
-            this.filterDatumBtn.Name = "filterDatumBtn";
-            this.filterDatumBtn.Size = new System.Drawing.Size(75, 23);
-            this.filterDatumBtn.TabIndex = 9;
-            this.filterDatumBtn.Text = "Filter";
-            this.filterDatumBtn.UseVisualStyleBackColor = true;
+            this.najProdLbl.AutoSize = true;
+            this.najProdLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.najProdLbl.Location = new System.Drawing.Point(8, 0);
+            this.najProdLbl.Name = "najProdLbl";
+            this.najProdLbl.Size = new System.Drawing.Size(60, 24);
+            this.najProdLbl.TabIndex = 7;
+            this.najProdLbl.Text = "label7";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 450);
+            this.Controls.Add(this.najProdLbl);
             this.Controls.Add(this.obrisiRacunBtn);
             this.Controls.Add(this.racunCenaLbl);
             this.Controls.Add(this.izdajRacunBtn);
@@ -459,6 +471,7 @@
         private System.Windows.Forms.DateTimePicker doTimePicker;
         private System.Windows.Forms.Button filterDatumBtn;
         private System.Windows.Forms.Button resetBtn;
+        private System.Windows.Forms.Label najProdLbl;
     }
 }
 
