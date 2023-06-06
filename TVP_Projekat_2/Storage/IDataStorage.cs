@@ -24,6 +24,8 @@ namespace Restoran.Storage
 
         Jelo GetTopJelo();
 
+        (int, int) GetStatistike(int id);
+
         void Close();
     }
 }
