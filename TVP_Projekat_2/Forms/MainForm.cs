@@ -27,7 +27,7 @@ namespace Restoran.Forms
             {
                 int x = 0;
                 bool nazad = false;
-                while(true)
+                while (true)
                 {
                     if (x == this.ClientSize.Width - najProdLbl.Width) nazad = true;
                     else if (x == 0) nazad = false;
@@ -60,7 +60,8 @@ namespace Restoran.Forms
             {
                 { "porucivanjeTab", new PorucivanjeHandler(jelaListBox, priloziGroupBox, jeloContext, filterNazivTb, cenaRastuceCb, cenaOpadajuceCb, storage) },
                 { "priloziTab", new PriloziHandler(priloziListBox, dodajPrilogBtn, storage) },
-                {"racuniTab", new RacuniHandler(racuniListBox, stavkeListBox, odTimePicker, doTimePicker,resetBtn, filterDatumBtn, storage)}
+                { "racuniTab", new RacuniHandler(racuniListBox, stavkeListBox, odTimePicker, doTimePicker,resetBtn, filterDatumBtn, storage)},
+                { "statistikaTab", new StatistikaHandler(storage, jelaStatistikaListbox, piePanel, izabranoLbl, ostaloLbl, (panel1, panel2)) }
             };
         }
 
