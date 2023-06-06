@@ -1,5 +1,6 @@
 ﻿using Restoran.Entiteti;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 
 namespace Restoran.Storage
@@ -142,6 +143,27 @@ namespace Restoran.Storage
             });
         }
 
+        public (int, int) GetStatistike(int id)
+        {
+            int izabrani = connection.UseQuery("select sum(kolicina) as ukupno " +
+                "from Stavka_racuna " +
+                "where (id_jelo = @0)",(reader) =>
+                {
+                    if (!reader.Read()) return -1;
+                    else return int.TryParse(reader["ukupno"].ToString(), out int temp) ? temp : 0;
+
+                }, id);
+            int sve = connection.UseQuery("select sum(kolicina) as ukupno " +
+                "from Stavka_racuna ", (reader) =>
+            {
+                if (!reader.Read()) return -1;
+                else return int.Parse(reader["ukupno"].ToString());
+                
+            });
+
+            return (izabrani, sve);
+        }
+
         public IList<Racun> GetRacuni(DateTime? odDatum, DateTime? doDatum)
         {
             DateTime odDatumFinish = odDatum.HasValue ? odDatum.Value : new DateTime(1970, 1, 1);
@@ -163,7 +185,6 @@ namespace Restoran.Storage
         {
             connection.Close();
         }
-
 
     }
 }
