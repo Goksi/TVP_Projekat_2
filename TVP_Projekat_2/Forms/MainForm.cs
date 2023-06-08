@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Restoran.Forms
 {
@@ -31,7 +32,12 @@ namespace Restoran.Forms
                 {
                     if (x == this.ClientSize.Width - najProdLbl.Width) nazad = true;
                     else if (x == 0) nazad = false;
-                    najProdLbl.Location = new Point(x, najProdLbl.Location.Y);
+                    if (najProdLbl.InvokeRequired)
+                    {
+                        Action safeWrite = delegate { najProdLbl.Location = new Point(x, najProdLbl.Location.Y); };
+                        najProdLbl.Invoke(safeWrite);
+                    }
+                    else najProdLbl.Location = new Point(x, najProdLbl.Location.Y);
                     if (!nazad) x++;
                     else x--;
                     Thread.Sleep(10);
@@ -61,7 +67,7 @@ namespace Restoran.Forms
                 { "porucivanjeTab", new PorucivanjeHandler(jelaListBox, priloziGroupBox, jeloContext, filterNazivTb, cenaRastuceCb, cenaOpadajuceCb, storage) },
                 { "priloziTab", new PriloziHandler(priloziListBox, dodajPrilogBtn, storage) },
                 { "racuniTab", new RacuniHandler(racuniListBox, stavkeListBox, odTimePicker, doTimePicker,resetBtn, filterDatumBtn, storage)},
-                { "statistikaTab", new StatistikaHandler(storage, jelaStatistikaListbox, piePanel, izabranoLbl, ostaloLbl, (panel1, panel2)) }
+                { "statistikaTab", new StatistikaHandler(storage, jelaStatistikaListbox, piePanel, izabranoLbl, ostaloLbl, (panel1, panel2), statistikaPickerOd, statistikaPickerDo, resetujStatistikaBtn, filterStatistikaBtn) }
             };
         }
 
