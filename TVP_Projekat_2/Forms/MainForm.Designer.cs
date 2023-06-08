@@ -53,6 +53,12 @@
             this.stavkeListBox = new System.Windows.Forms.ListBox();
             this.racuniListBox = new System.Windows.Forms.ListBox();
             this.statistikaTab = new System.Windows.Forms.TabPage();
+            this.piePanel = new System.Windows.Forms.Panel();
+            this.ostaloLbl = new System.Windows.Forms.Label();
+            this.izabranoLbl = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.jelaStatistikaListbox = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.racunListBox = new System.Windows.Forms.ListBox();
             this.izdajRacunBtn = new System.Windows.Forms.Button();
@@ -65,12 +71,10 @@
             this.racunContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.obrisiStavkuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.najProdLbl = new System.Windows.Forms.Label();
-            this.jelaStatistikaListbox = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.izabranoLbl = new System.Windows.Forms.Label();
-            this.ostaloLbl = new System.Windows.Forms.Label();
-            this.piePanel = new System.Windows.Forms.Panel();
+            this.statistikaPickerOd = new System.Windows.Forms.DateTimePicker();
+            this.statistikaPickerDo = new System.Windows.Forms.DateTimePicker();
+            this.resetujStatistikaBtn = new System.Windows.Forms.Button();
+            this.filterStatistikaBtn = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.porucivanjeTab.SuspendLayout();
             this.priloziTab.SuspendLayout();
@@ -303,6 +307,10 @@
             // 
             // statistikaTab
             // 
+            this.statistikaTab.Controls.Add(this.filterStatistikaBtn);
+            this.statistikaTab.Controls.Add(this.resetujStatistikaBtn);
+            this.statistikaTab.Controls.Add(this.statistikaPickerDo);
+            this.statistikaTab.Controls.Add(this.statistikaPickerOd);
             this.statistikaTab.Controls.Add(this.piePanel);
             this.statistikaTab.Controls.Add(this.ostaloLbl);
             this.statistikaTab.Controls.Add(this.izabranoLbl);
@@ -315,6 +323,57 @@
             this.statistikaTab.TabIndex = 3;
             this.statistikaTab.Text = "Statistika";
             this.statistikaTab.UseVisualStyleBackColor = true;
+            // 
+            // piePanel
+            // 
+            this.piePanel.Location = new System.Drawing.Point(263, 3);
+            this.piePanel.Name = "piePanel";
+            this.piePanel.Size = new System.Drawing.Size(172, 172);
+            this.piePanel.TabIndex = 5;
+            // 
+            // ostaloLbl
+            // 
+            this.ostaloLbl.AutoSize = true;
+            this.ostaloLbl.Location = new System.Drawing.Point(467, 40);
+            this.ostaloLbl.Name = "ostaloLbl";
+            this.ostaloLbl.Size = new System.Drawing.Size(215, 13);
+            this.ostaloLbl.TabIndex = 4;
+            this.ostaloLbl.Text = "Ostalo: Ukupno prodato: %d, Procenat: %.2f";
+            // 
+            // izabranoLbl
+            // 
+            this.izabranoLbl.AutoSize = true;
+            this.izabranoLbl.Location = new System.Drawing.Point(467, 7);
+            this.izabranoLbl.Name = "izabranoLbl";
+            this.izabranoLbl.Size = new System.Drawing.Size(198, 13);
+            this.izabranoLbl.TabIndex = 3;
+            this.izabranoLbl.Text = "%s: Ukupno prodato: %d, Procenat: %.2f";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Location = new System.Drawing.Point(444, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(17, 17);
+            this.panel2.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(444, 36);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(17, 17);
+            this.panel1.TabIndex = 1;
+            // 
+            // jelaStatistikaListbox
+            // 
+            this.jelaStatistikaListbox.FormattingEnabled = true;
+            this.jelaStatistikaListbox.Location = new System.Drawing.Point(3, 3);
+            this.jelaStatistikaListbox.Name = "jelaStatistikaListbox";
+            this.jelaStatistikaListbox.Size = new System.Drawing.Size(254, 381);
+            this.jelaStatistikaListbox.TabIndex = 0;
             // 
             // label1
             // 
@@ -415,56 +474,37 @@
             this.najProdLbl.TabIndex = 7;
             this.najProdLbl.Text = "label7";
             // 
-            // jelaStatistikaListbox
+            // statistikaPickerOd
             // 
-            this.jelaStatistikaListbox.FormattingEnabled = true;
-            this.jelaStatistikaListbox.Location = new System.Drawing.Point(3, 3);
-            this.jelaStatistikaListbox.Name = "jelaStatistikaListbox";
-            this.jelaStatistikaListbox.Size = new System.Drawing.Size(254, 381);
-            this.jelaStatistikaListbox.TabIndex = 0;
+            this.statistikaPickerOd.Location = new System.Drawing.Point(261, 204);
+            this.statistikaPickerOd.Name = "statistikaPickerOd";
+            this.statistikaPickerOd.Size = new System.Drawing.Size(200, 20);
+            this.statistikaPickerOd.TabIndex = 6;
             // 
-            // panel1
+            // statistikaPickerDo
             // 
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(444, 36);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(17, 17);
-            this.panel1.TabIndex = 1;
+            this.statistikaPickerDo.Location = new System.Drawing.Point(261, 271);
+            this.statistikaPickerDo.Name = "statistikaPickerDo";
+            this.statistikaPickerDo.Size = new System.Drawing.Size(200, 20);
+            this.statistikaPickerDo.TabIndex = 7;
             // 
-            // panel2
+            // resetujStatistikaBtn
             // 
-            this.panel2.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Location = new System.Drawing.Point(444, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(17, 17);
-            this.panel2.TabIndex = 2;
+            this.resetujStatistikaBtn.Location = new System.Drawing.Point(263, 319);
+            this.resetujStatistikaBtn.Name = "resetujStatistikaBtn";
+            this.resetujStatistikaBtn.Size = new System.Drawing.Size(75, 23);
+            this.resetujStatistikaBtn.TabIndex = 8;
+            this.resetujStatistikaBtn.Text = "Resetuj";
+            this.resetujStatistikaBtn.UseVisualStyleBackColor = true;
             // 
-            // izabranoLbl
+            // filterStatistikaBtn
             // 
-            this.izabranoLbl.AutoSize = true;
-            this.izabranoLbl.Location = new System.Drawing.Point(467, 7);
-            this.izabranoLbl.Name = "izabranoLbl";
-            this.izabranoLbl.Size = new System.Drawing.Size(198, 13);
-            this.izabranoLbl.TabIndex = 3;
-            this.izabranoLbl.Text = "%s: Ukupno prodato: %d, Procenat: %.2f";
-            // 
-            // ostaloLbl
-            // 
-            this.ostaloLbl.AutoSize = true;
-            this.ostaloLbl.Location = new System.Drawing.Point(467, 40);
-            this.ostaloLbl.Name = "ostaloLbl";
-            this.ostaloLbl.Size = new System.Drawing.Size(215, 13);
-            this.ostaloLbl.TabIndex = 4;
-            this.ostaloLbl.Text = "Ostalo: Ukupno prodato: %d, Procenat: %.2f";
-            // 
-            // piePanel
-            // 
-            this.piePanel.Location = new System.Drawing.Point(263, 3);
-            this.piePanel.Name = "piePanel";
-            this.piePanel.Size = new System.Drawing.Size(172, 172);
-            this.piePanel.TabIndex = 5;
+            this.filterStatistikaBtn.Location = new System.Drawing.Point(386, 319);
+            this.filterStatistikaBtn.Name = "filterStatistikaBtn";
+            this.filterStatistikaBtn.Size = new System.Drawing.Size(75, 23);
+            this.filterStatistikaBtn.TabIndex = 9;
+            this.filterStatistikaBtn.Text = "Dodaj filter";
+            this.filterStatistikaBtn.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -544,6 +584,10 @@
         private System.Windows.Forms.Label ostaloLbl;
         private System.Windows.Forms.Label izabranoLbl;
         private System.Windows.Forms.Panel piePanel;
+        private System.Windows.Forms.Button filterStatistikaBtn;
+        private System.Windows.Forms.Button resetujStatistikaBtn;
+        private System.Windows.Forms.DateTimePicker statistikaPickerDo;
+        private System.Windows.Forms.DateTimePicker statistikaPickerOd;
     }
 }
 

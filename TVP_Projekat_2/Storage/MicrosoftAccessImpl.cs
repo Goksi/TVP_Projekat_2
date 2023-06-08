@@ -1,7 +1,7 @@
 ﻿using Restoran.Entiteti;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Data.OleDb;
 
 namespace Restoran.Storage
 {
@@ -143,25 +143,30 @@ namespace Restoran.Storage
             });
         }
 
-        public (int, int) GetStatistike(int id)
+        public (int, int) GetStatistike(int id, DateTime odDatum, DateTime doDatum)
         {
-            int izabrani = connection.UseQuery("select sum(kolicina) as ukupno " +
+            string izabraniQuery = "select sum(kolicina) as ukupno " +
                 "from Stavka_racuna " +
-                "where (id_jelo = @0)",(reader) =>
-                {
-                    if (!reader.Read()) return -1;
-                    else return int.TryParse(reader["ukupno"].ToString(), out int temp) ? temp : 0;
-
-                }, id);
-            int sve = connection.UseQuery("select sum(kolicina) as ukupno " +
-                "from Stavka_racuna ", (reader) =>
+                "inner join Racun on Stavka_racuna.id_racun = Racun.id_racun " +
+                "where (id_jelo = @0)";
+            string ukupnoQuery = "select sum(kolicina) as ukupno " +
+                "from Stavka_racuna " +
+                "inner join Racun on Stavka_racuna.id_racun = Racun.id_racun";
+            if (odDatum != default && doDatum != default)
             {
-                if (!reader.Read()) return -1;
-                else return int.Parse(reader["ukupno"].ToString());
-                
-            });
+                izabraniQuery += " and datum between @1 and @2";
+                ukupnoQuery += " where datum between @0 and @1";
+            }
+            int izabrani = connection.UseQuery(izabraniQuery, ParseUkupno, id, odDatum, doDatum);
+            int sve = connection.UseQuery(ukupnoQuery, ParseUkupno, odDatum, doDatum);
 
             return (izabrani, sve);
+        }
+
+        private int ParseUkupno(OleDbDataReader reader)
+        {
+            if (!reader.Read()) return -1;
+            else return int.TryParse(reader["ukupno"].ToString(), out int temp) ? temp : 0;
         }
 
         public IList<Racun> GetRacuni(DateTime? odDatum, DateTime? doDatum)

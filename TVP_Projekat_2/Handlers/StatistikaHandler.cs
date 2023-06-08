@@ -14,9 +14,11 @@ namespace Restoran.Handlers
         private readonly Label jeloLabel;
         private readonly Label ostaloLabel;
         private readonly (Panel, Panel) paneli;
-        
+        private DateTime odVreme;
+        private DateTime doVreme;
+
         private (int, int) statistike; // odabrano jelo, sve ostalo
-        public StatistikaHandler(IDataStorage storage, ListBox jelaListBox, Panel piePanel, Label jeloLabel, Label ostaloLabel, (Panel, Panel) paneli)
+        public StatistikaHandler(IDataStorage storage, ListBox jelaListBox, Panel piePanel, Label jeloLabel, Label ostaloLabel, (Panel, Panel) paneli, DateTimePicker odPicker, DateTimePicker doPicker, Button clearFilter, Button filter)
         {
             this.paneli = paneli;
             this.storage = storage;
@@ -27,6 +29,25 @@ namespace Restoran.Handlers
 
             jelaListBox.SelectedIndexChanged += HandleIndexChange;
             piePanel.Paint += HandleDraw;
+
+            filter.Click += (obj, args) =>
+            {
+                if (odPicker.Value.Date > doPicker.Value.Date)
+                {
+                    MessageBox.Show("Ne moze OD datum da bude posle DO datuma !", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                odVreme = odPicker.Value;
+                doVreme = doPicker.Value;
+                HandleIndexChange(obj, args);
+            };
+
+            clearFilter.Click += (obj, args) =>
+            {
+                odVreme = default;
+                doVreme = default;
+                HandleIndexChange(obj, args);
+            };
         }
 
         private void HandleDraw(object sender, PaintEventArgs e)
@@ -52,21 +73,23 @@ namespace Restoran.Handlers
             var selected = jelaListBox.SelectedItem;
             if (selected == null) return;
             Jelo jelo = selected as Jelo;
-            statistike = storage.GetStatistike(jelo.Id);
+            statistike = storage.GetStatistike(jelo.Id, odVreme, doVreme);
             ShowPanels(true);
-            double proc = Math.Round((double)statistike.Item1 / statistike.Item2 * 100, 2);
+            Console.WriteLine($"Prva: {statistike.Item1} Druga: {statistike.Item2}");
+            double proc = Math.Round((double)statistike.Item1 / (statistike.Item2 == 0 ? 1 : statistike.Item2) * 100, 2);
             jeloLabel.Text = $"{jelo.Naziv}: Ukupno prodato: {statistike.Item1}, Procenat: {proc}%";
             ostaloLabel.Text = $"Ostalo: Ukupno prodato: {statistike.Item2 - statistike.Item1}, Procenat: {100 - proc}%";
             piePanel.Invalidate();
         }
 
-        private void ShowPanels(bool show) 
+        private void ShowPanels(bool show)
         {
             if (show)
             {
                 paneli.Item1.Show();
                 paneli.Item2.Show();
-            } else
+            }
+            else
             {
                 paneli.Item1.Hide();
                 paneli.Item2.Hide();
