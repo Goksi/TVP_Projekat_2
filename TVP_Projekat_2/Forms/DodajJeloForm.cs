@@ -35,7 +35,7 @@ namespace Restoran.Forms
             obrisiPrilogContext.Items[0].Enabled = true;
             if (e.Button != MouseButtons.Right) return;
             var listBoxIndex = priloziListBox.IndexFromPoint(e.Location);
-            if (listBoxIndex < 0)
+            if (listBoxIndex == -1)
             {
                 obrisiPrilogContext.Items[0].Enabled = false;
             }
